@@ -8,9 +8,14 @@ from application.forms import AddCharacter
 @app.route('/', methods = ['GET', 'POST'])
 def home():
     form = AddCharacter()
-    return render_template('index.html', form=form)
-
-# @app.route('/objectives', methods = ['GET'])
-# def objectives():
-#     objectives = Objectives.query.all()
-#     return render_template('index.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            character = Characters(
+                char_name = form.name.data,
+                char_lvl = form.lvl.data,
+                char_proffesion = form.proffesion.data
+            )
+            db.session.add(character)
+            db.session.commit()
+    all_characters = Characters.query.all()
+    return render_template('add_character.html', form=form, characters=all_characters)
