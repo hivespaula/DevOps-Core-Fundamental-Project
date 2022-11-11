@@ -1,7 +1,23 @@
 <html>
+    <head>
+        <title>Characters & Objectives</title>
+    <head>
     <body>
-        <h1>Character Objectives</h1>
-        {% block body %}
-        {% endblock body %}
-    </body>
+        <h2> Characters & Objectives </h2>
+        <br>
+            <div class='form'>
+                <form method='POST' action=''>
+                    {{ form.hidden_tag() }}
+                    {{ form.name.label }} {{ form.name }}
+                <br>
+                    {{ form.lvl.label }} {{ form.lvl }}
+                <br>
+                    {{ form.proffesion.label }} {{ form.proffesion }}
+                <br>
+                <br>
+                    {{ form.submit }}
+            </form>
+        </div>
+        </body>
+    </head>
 </html>
