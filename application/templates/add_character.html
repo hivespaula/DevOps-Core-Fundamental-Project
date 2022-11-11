@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+{% block body %}
+    {% for character in characters %}
+        <p> {{ character.char_name }}
+            <br>{{ character.char_lvl}}
+            <br>{{ character.char_proffesion}}
+        </p>
+    {% endfor %}
+{% endblock body %}
