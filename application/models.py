@@ -16,6 +16,6 @@ class Objectives(db.Model):
     __tablename__ = 'objectives'
     id = db.Column(db.Integer, primary_key=True)
     characters_id = db.Column(db.Integer, db.ForeignKey('characters.id'), nullable=False)
-    daily = db.Column(db.Boolean, nullable=False)
-    weekly = db.Column(db.Boolean, nullable=False)
-    proffesion = db.Column(db.Boolean, nullable=False)
+    daily = db.Column(db.Boolean, default=False)
+    weekly = db.Column(db.Boolean, default=False)
+    proffesion = db.Column(db.Boolean, default=False)
