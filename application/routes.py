@@ -3,7 +3,7 @@ from application import app, db
 from application.models import Characters, Objectives
 from flask import render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
-from application.forms import AddCharacter
+from application.forms import AddCharacter, UpdateCharacter
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
@@ -26,9 +26,22 @@ def add():
         return redirect(url_for('home'))
     return render_template('add_character.html', form=form, character=character)
 
-@app.route('/delete/<character>')
-def delete(character):
-    delete_character = Characters.query.filter_by(id=character).first()
+@app.route('/delete/<int:id>')
+def delete(id):
+    delete_character = Characters.query.filter_by(id=id).first()
     db.session.delete(delete_character)
     db.session.commit()
     return redirect(url_for('home'))
+
+@app.route('/update/<int:id>', methods = ['GET', 'POST'])
+def update(id):
+    updateform = UpdateCharacter()
+    update_character = Characters.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        if updateform.validate_on_submit():
+            update_character.char_name = updateform.name.data
+            update_character.lvl = updateform.lvl.data
+            update_character.proffesion = updateform.proffesion.data
+            db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('update_character.html', form=updateform)
