@@ -8,14 +8,27 @@ from application.forms import AddCharacter
 @app.route('/', methods = ['GET', 'POST'])
 def home():
     form = AddCharacter()
+    all_characters = Characters.query.all()
+    return render_template('add_character.html', form=form, characters=all_characters)
+
+@app.route('/add', methods = ['GET', 'POST'])
+def add():
+    form = AddCharacter()
     if request.method == 'POST':
         if form.validate_on_submit():
-            character = Characters(
+           character = Characters(
                 char_name = form.name.data,
                 char_lvl = form.lvl.data,
                 char_proffesion = form.proffesion.data
             )
-            db.session.add(character)
-            db.session.commit()
-    all_characters = Characters.query.all()
-    return render_template('add_character.html', form=form, characters=all_characters)
+        db.session.add(character)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('add_character.html', form=form, character=character)
+
+@app.route('/delete/<character>')
+def delete(character):
+    delete_character = Characters.query.filter_by(id=character).first()
+    db.session.delete(delete_character)
+    db.session.commit()
+    return redirect(url_for('home'))
