@@ -1,0 +1,18 @@
+{% block body %}
+    <h2> Update Character </h2>
+    <br>
+        <div class='form'>
+            <form method='POST' action=''>
+                {{ form.hidden_tag() }}
+                {{ form.name.label }} {{ form.name }}
+            <br>
+                {{ form.lvl.label }} {{ form.lvl }}
+            <br>
+                {{ form.proffesion.label }} {{ form.proffesion }}
+            <br>
+            <br>
+                {{ form.submit }}
+            <br>
+        </form>
+    </div>
+{% endblock body %}
