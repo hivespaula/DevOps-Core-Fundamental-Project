@@ -4,6 +4,8 @@
         <p> {{ character.char_name }}
             <br>{{ character.char_lvl}}
             <br>{{ character.char_proffesion}}
+            <br><button><a href="">Update</a></button>
+            <button><a href="{{ url_for('delete', character=character.id) }}">Delete</a></button>
         </p>
     {% endfor %}
 {% endblock body %}
