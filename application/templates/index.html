@@ -8,9 +8,9 @@
             <div class='form'>
                 <form method='POST' action='add'>
                     {{ form.hidden_tag() }}
-                    {{ form.name.label }} {{ form.name }}
+                    {{ form.name.label }} {{ form.name(placeholder="Enter character name") }}
                 <br>
-                    {{ form.lvl.label }} {{ form.lvl }}
+                    {{ form.lvl.label }} {{ form.lvl(placeholder="Enter character level") }}
                 <br>
                     {{ form.proffesion.label }} {{ form.proffesion }}
                 <br>
