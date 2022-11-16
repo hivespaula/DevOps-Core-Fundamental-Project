@@ -25,16 +25,15 @@ def add():
         db.session.commit()
         
         # assign character id to objectives character id
-        # works but then doesn't let character to be deleted
 
-        # objective = Objectives(
-        #     characters_id = character.id,
-        #         daily = False,
-        #         weekly = False,
-        #         proffesion = False
-        #         )
-        # db.session.add(objective)
-        # db.session.commit()
+        objective = Objectives(
+            characters_id = character.id,
+                daily = False,
+                weekly = False,
+                proffesion = False
+                )
+        db.session.add(objective)
+        db.session.commit()
 
         return redirect(url_for('home'))
     return render_template('add_character.html', form=form, character=character)
