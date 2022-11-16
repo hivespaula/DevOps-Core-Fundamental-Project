@@ -9,13 +9,13 @@ class Characters(db.Model):
     char_name = db.Column(db.String(30), nullable=False)
     char_lvl = db.Column(db.Integer, nullable=False)
     char_proffesion = db.Column(db.String(30), nullable=False)
-    objectives = db.relationship('Objectives', backref='objectivesbr')
+    objectives = db.relationship('Objectives', backref='character_idbr', lazy=True)
 
 
 class Objectives(db.Model):
     __tablename__ = 'objectives'
     id = db.Column(db.Integer, primary_key=True)
-    characters_id = db.Column(db.Integer, db.ForeignKey('characters.id'), nullable=False)
+    characters_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
     daily = db.Column(db.Boolean, default=False)
     weekly = db.Column(db.Boolean, default=False)
     proffesion = db.Column(db.Boolean, default=False)
