@@ -3,7 +3,7 @@ from application import app, db
 from application.models import Characters, Objectives
 from flask import render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
-from application.forms import AddCharacter, UpdateCharacter
+from application.forms import AddCharacter, UpdateCharacter, ObjectivesForm
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
@@ -23,25 +23,48 @@ def add():
             )
         db.session.add(character)
         db.session.commit()
+        
+        # assign character id to objectives character id
+        # works but then doesn't let character to be deleted
+
+        # objective = Objectives(
+        #     characters_id = character.id,
+        #         daily = False,
+        #         weekly = False,
+        #         proffesion = False
+        #         )
+        # db.session.add(objective)
+        # db.session.commit()
+
         return redirect(url_for('home'))
     return render_template('add_character.html', form=form, character=character)
 
+#delete route
 @app.route('/delete/<int:id>')
 def delete(id):
+    #check id of the charcater to be deleted and delete
     delete_character = Characters.query.filter_by(id=id).first()
     db.session.delete(delete_character)
     db.session.commit()
     return redirect(url_for('home'))
-
+#update route
 @app.route('/update/<int:id>', methods = ['GET', 'POST'])
 def update(id):
+    #get form for updatecharacters and assign appropriate id for the character to update
     updateform = UpdateCharacter()
     update_character = Characters.query.filter_by(id=id).first()
     if request.method == 'POST':
         if updateform.validate_on_submit():
+            #input new data taken in from the form
             update_character.char_name = updateform.name.data
-            update_character.lvl = updateform.lvl.data
-            update_character.proffesion = updateform.proffesion.data
+            update_character.char_lvl = updateform.lvl.data
+            update_character.char_proffesion = updateform.proffesion.data
             db.session.commit()
         return redirect(url_for('home'))
     return render_template('update_character.html', form=updateform)
+
+# @app.route('/objectives/<int:id>', methods = ['GET', 'POST'])
+# def objectives(id):
+#     objectivesform = Objectives()
+#     all_objectives = Objectives.query.all()
+#     return render_template('objectives.html', form=objectivesform, objectives=all_objectives)
